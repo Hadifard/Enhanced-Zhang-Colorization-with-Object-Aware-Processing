@@ -49,7 +49,7 @@ class AdaptiveRecolorizer:
     and selective color override functionality.
     """
     
-    def __init__(self, zhang_model_dir="model", use_yolo=False, 
+    def __init__(self, zhang_model_dir="models", use_yolo=False, 
                  chroma_threshold=5.0):
         """
         Initialize recolorization pipeline with smart region detection.
