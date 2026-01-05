@@ -51,7 +51,7 @@ class ObjectByObjectColorizer:
     and prevent unwanted color propagation across different regions.
     """
     
-    def __init__(self, zhang_model_dir="model", use_yolo=False):
+    def __init__(self, zhang_model_dir="models", use_yolo=False):
         """
         Initialize the colorization pipeline with segmentation and color models.
         
