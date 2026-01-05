@@ -38,13 +38,14 @@ This project extends the original Zhang et al. colorization network with three m
 
 ## Results Comparison
 
-### Example 1: Prague Tourist Photo
+### Example 1: My Photo
+#### Running by Zhang algorithm
 **Issues Fixed:**
 - Color bleeding around head contours 
 - Uncolored hands and background people 
 - Non-uniform jacket coloring 
 
-![Prague Comparison](docs/comparison_images/combined_my_image_in_prague.jpg)
+![My image in Prague Comparison](docs/comparison_images/combined_my_image_in_prague.jpg)
 
 ---
 
@@ -77,7 +78,7 @@ This project extends the original Zhang et al. colorization network with three m
 
 ---
 
-### Example 5: New Zealand Woman Portrait
+### Example 5: A New Vintage Zealand Woman Portrait
 **Issues Fixed:**
 - Eye whites no longer match skin tone 
 - Natural lip coloration applied 
