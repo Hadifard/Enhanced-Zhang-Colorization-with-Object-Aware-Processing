@@ -7,15 +7,46 @@
 
 Advanced black and white image or video colorization using **Zhang et al.'s deep learning algorithm** with custom enhancements for object-aware processing, facial feature correction, and color bleeding prevention.
 
-## Project Overview
+---
 
-This project extends the original Zhang et al. colorization network with three major improvements:
+## Table of Contents
 
-1. **Object-Aware Colorization** - Prevents color bleeding across object boundaries
-2. **Facial Feature Enhancement** - Corrects eye sclera and lip coloration for natural results
-3. **Interactive Recolorization** - Allows custom color selection for detected objects
+- [Overview](#-Project Overview)
+- [The Problem with Original Zhang Algorithm](#-the-problem-with-original-zhang-algorithm)
+- [Our Solutions](#-our-solutions)
+- [Visual Results & Comparisons](#-visual-results--comparisons)
+- [Technical Architecture](#-technical-architecture)
+- [Installation](#️-installation)
+- [Usage Guide](#-usage-guide)
+- [Project Structure](#-project-structure)
+- [Citation](#-citation)
+- [License](#-license)
+- [Acknowledgments](#-acknowledgments)
 
 ---
+
+## Project Overview
+
+This project extends the groundbreaking **Zhang et al. colorization algorithm** with three critical enhancements that solve major real-world problems encountered when colorizing historical photographs, portraits, and complex scenes.
+
+### What is Zhang et al.'s Algorithm?
+
+The [Zhang et al. (2016)](http://richzhang.github.io/colorization/) colorization network is a CNN-based deep learning model trained on over 1.3 million images from ImageNet. It predicts plausible color information (ab channels in Lab color space) from grayscale images (L channel). While revolutionary, it has several limitations in practical applications.
+
+### Why This Project?
+
+After extensive testing with real historical photos, vintage portraits, and complex scenes, we identified **five critical problems** with the original implementation:
+
+1. **Color Bleeding Across Object Boundaries** - Colors leak from one object to another
+2. **Inconsistent Colorization** - Same objects receive different colors within the image
+3. **Facial Feature Miscoloring** - Eye whites take skin tone, lips appear colorless
+4. **Incomplete Coverage** - Some regions remain grayscale or poorly colored
+5. **No User Control** - Cannot manually adjust colors of specific objects
+
+This project provides **three specialized Python implementations** that systematically address these issues.
+
+---
+
 
 ## Key Features
 
