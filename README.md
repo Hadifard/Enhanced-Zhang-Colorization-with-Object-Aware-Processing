@@ -45,7 +45,7 @@ This project extends the original Zhang et al. colorization network with three m
 - Uncolored hands and background people 
 - Non-uniform jacket coloring 
 
-![My image in Prague Comparison](docs/comparison_images/combined_my_image_in_prague.jpg)
+![My image in Prague Comparison](examples/output/combined_my_image_in_prague.jpg)
 
 ---
 
