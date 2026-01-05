@@ -95,10 +95,10 @@ This project provides **three specialized Python implementations** that systemat
 5. Fill gaps with background colorization
 
 **Key Benefits:**
--  Complete elimination of color bleeding across object boundaries
--  Each object maintains color integrity
--  Proper handling of overlapping objects
--  Automatic background completion
+- Complete elimination of color bleeding across object boundaries
+- Each object maintains color integrity
+- Proper handling of overlapping objects
+- Automatic background completion
 
 **Supported Objects:** 80+ categories including people, animals, vehicles, furniture, nature elements, and more (COCO dataset classes).
 
@@ -118,10 +118,10 @@ This project provides **three specialized Python implementations** that systemat
 7. Override lip region with natural rose/pink (Lab: a≈45, b≈25)
 
 **Key Benefits:**
-- ✅ Authentic white eye sclera (prevents skin tone bleeding)
-- ✅ Natural pink/rose lip coloration
-- ✅ Maintains all other Zhang colorization features
-- ✅ Works with portraits from any era
+- Authentic white eye sclera (prevents skin tone bleeding)
+- Natural pink/rose lip coloration
+- Maintains all other Zhang colorization features
+- Works with portraits from any era
 
 **Technical Details:**
 - **Eye Sclera Color:** Neutral white with slight warm yellow undertone
@@ -132,7 +132,7 @@ This project provides **three specialized Python implementations** that systemat
 
 ### Solution 3: Interactive Custom Recolorization
 
-**File:** `custom_recolorization.py`
+**File:** `Custom recolorization of detected objects.py`
 
 **How it works:**
 1. Perform object detection and colorization
@@ -142,10 +142,10 @@ This project provides **three specialized Python implementations** that systemat
 5. Respect colorizable region boundaries (won't color glass, metal, etc.)
 
 **Key Benefits:**
-- ✅ Full control over object colors
-- ✅ Intelligent detection of colorizable vs. non-colorizable regions
-- ✅ Interactive UI for color selection
-- ✅ Percentage metrics for each object's colorizable area
+- Full control over object colors
+- Intelligent detection of colorizable vs. non-colorizable regions
+- Interactive UI for color selection
+- Percentage metrics for each object's colorizable area
 
 **Advanced Feature - Colorizable Region Detection:**
 
@@ -160,7 +160,7 @@ This prevents trying to color inherently achromatic objects (glass, chrome, whit
 
 ---
 
-## 📊 Visual Results & Comparisons
+## Visual Results & Comparisons
 
 ### Complete Pipeline Demonstrations
 
