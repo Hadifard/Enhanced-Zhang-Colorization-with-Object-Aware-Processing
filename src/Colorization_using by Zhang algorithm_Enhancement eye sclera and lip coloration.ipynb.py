@@ -55,7 +55,7 @@ class FacialFeatureColorizer:
     Implements specialized color correction for eye sclera and lip tissue.
     """
     
-    def __init__(self, zhang_model_dir="model", landmark_predictor_path="shape_predictor_68_face_landmarks.dat"):
+    def __init__(self, zhang_model_dir="models", landmark_predictor_path="shape_predictor_68_face_landmarks.dat"):
         """
         Initialize the facial feature colorization pipeline.
         
