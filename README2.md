@@ -189,7 +189,6 @@ Each of these images shows the **complete transformation process** from original
 **Key improvements:**
 - Authentic eye whites with natural warmth
 - Rose-toned lips with proper saturation
-- No color bleeding between face and collar
 - Consistent hair coloration
 
 ---
@@ -204,11 +203,11 @@ Each of these images shows the **complete transformation process** from original
 - **CRITICAL FIX:** Color bleeding eliminated - horse neck color no longer leaks to background
 - Sharp boundary preservation between horse and landscape
 - Proper sky colorization
-- Natural ground/grass tones
+- Natural horse and ground tones
 
 ---
 
-#### 4. Tourist Photo in Prague
+#### 4. My photo in Prague
 
 ![Prague Pipeline](examples/output/Combined_object%20aware_my%20image%20in%20Prague.jpg)
 
@@ -216,9 +215,9 @@ Each of these images shows the **complete transformation process** from original
 
 **Key improvements:**
 - All people properly detected and colored
-- Background architecture correctly segmented
-- Water properly colorized (river/canal)
 - No color contamination between people and background
+- No color bleeding between face and collar and background
+- All body parts colored
 
 ---
 
@@ -253,7 +252,7 @@ These comparison images highlight **specific problems solved** by our enhancemen
 
 #### Comparison 2: Facial Feature Enhancement (Young Woman)
 
-![Eye & Lip Fix - Young Woman](docs/comparison_images/Comparison_zhang%20with%20object%20aware__eye%20sclera%20and%20Natural%20lip%20coloration_a%20young%20woman%20vintage%20portrait.jpg)
+![Eye & Lip Fix - Young Woman](docs/comparison_images/Comparison_zhang%20with%20object%20aware__eye%20sclera%20and%20natural%20lip%20coloration_a%20young%20woman%20vintage%20portrait.jpg)
 
 **Left (Zhang Original):** Eyes appear unhealthy with skin-toned whites, lips too pale  
 **Right (Our Enhancement):** Bright, natural eye whites, vibrant pink lips
@@ -273,7 +272,7 @@ These comparison images highlight **specific problems solved** by our enhancemen
 
 ---
 
-#### Comparison 4: Uniform Colorization & Region Coverage (Prague)
+#### Comparison 4: Uniform Colorization & Region Coverage (My photo)
 
 ![Uniform & Coverage Fix - Prague](docs/comparison_images/Comparison_zhang%20with%20object%20aware__Prevent%20color%20bleeding%20and%20uniform%20colorization_my%20image%20in%20Prague.jpg)
 
@@ -284,10 +283,9 @@ These comparison images highlight **specific problems solved** by our enhancemen
 - Jacket coloring inconsistent
 
 **Right (Our Enhancement):**
-- All hands properly colored
-- Background people fully colorized
+- All hands around 90% colored
+- Background people got colorized
 - Sharp boundaries around all people
-- Uniform jacket color throughout
 
 ---
 
