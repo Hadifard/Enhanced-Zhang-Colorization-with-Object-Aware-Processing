@@ -46,7 +46,7 @@ This project extends the original Zhang et al. colorization network with three m
 - Non-uniform jacket coloring 
 
 ![My image in Prague Comparison](examples/output/Combined_object aware_my image in Prague.jpg)
-
+examples/output/Combined_object aware_my image in Prague.jpg
 ---
 
 ### Example 2: Horse in Landscape
