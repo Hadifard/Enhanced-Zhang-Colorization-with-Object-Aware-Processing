@@ -5,11 +5,11 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-1.9+-red.svg)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> **Advanced black and white image colorization** using Zhang et al.'s deep learning algorithm with comprehensive enhancements for real-world applications.
+> Advanced black and white image or video colorization using **Zhang et al.'s deep learning algorithm** with custom enhancements for object-aware processing, facial feature correction, and color bleeding prevention.
 
 ---
 
-## 📖 Table of Contents
+## Table of Contents
 
 - [Overview](#-overview)
 - [The Problem with Original Zhang Algorithm](#-the-problem-with-original-zhang-algorithm)
@@ -25,7 +25,7 @@
 
 ---
 
-## 🎯 Overview
+## Overview
 
 This project extends the groundbreaking **Zhang et al. colorization algorithm** with three critical enhancements that solve major real-world problems encountered when colorizing historical photographs, portraits, and complex scenes.
 
@@ -47,13 +47,13 @@ This project provides **three specialized Python implementations** that systemat
 
 ---
 
-## ❌ The Problem with Original Zhang Algorithm
+## The Problem with Original Zhang Algorithm
 
 ### Issue #1: Color Bleeding
 
-**Problem:** Colors from one object "bleed" or "leak" into adjacent objects, especially at boundaries.
+**Problem:** Colors from one object "bleed" or "leak" into adjacent objects, especially color bleeding across object boundariess.
 
-**Example:** In horse images, neck colors spread to the background. In portraits, clothing colors contaminate skin regions.
+**Example:** In horse images, neck colors spread to the background. In my image in Prague, clothing colors contaminate skin regions, and also my face skin color bleeded to the background.
 
 **Root Cause:** The Zhang model processes the entire image holistically without understanding object boundaries.
 
@@ -61,7 +61,7 @@ This project provides **three specialized Python implementations** that systemat
 
 **Problem:** Objects of the same type receive different colors in different parts of the image. Some regions remain completely grayscale.
 
-**Example:** A person's jacket may be half-colored and half-grayscale, or a car's tires remain black while the body is colored.
+**Example:** A person's jacket may be half-colored and half-grayscale, or a car's tires remain black while the body is colored. we can see issues in my image in Prague.jpg and in racing car.jpg colored images by Zhang algorithm.  
 
 **Root Cause:** Limited context window and lack of global semantic understanding.
 
@@ -81,11 +81,11 @@ This project provides **three specialized Python implementations** that systemat
 
 ---
 
-## ✅ Our Solutions
+## Our Solutions
 
 ### Solution 1: Object-Aware Colorization (Prevent Color Bleeding)
 
-**File:** `object_detection_colorization.py`
+**File:** `Object detection processing to prevent color bleeding.py`
 
 **How it works:**
 1. Use semantic segmentation (DeepLabV3+ or YOLOv8) to detect individual objects
@@ -95,10 +95,10 @@ This project provides **three specialized Python implementations** that systemat
 5. Fill gaps with background colorization
 
 **Key Benefits:**
-- ✅ Complete elimination of color bleeding across object boundaries
-- ✅ Each object maintains color integrity
-- ✅ Proper handling of overlapping objects
-- ✅ Automatic background completion
+-  Complete elimination of color bleeding across object boundaries
+-  Each object maintains color integrity
+-  Proper handling of overlapping objects
+-  Automatic background completion
 
 **Supported Objects:** 80+ categories including people, animals, vehicles, furniture, nature elements, and more (COCO dataset classes).
 
@@ -106,7 +106,7 @@ This project provides **three specialized Python implementations** that systemat
 
 ### Solution 2: Facial Feature Enhancement (Natural Eye & Lip Colors)
 
-**File:** `facial_feature_enhancement.py`
+**File:** `Enhancement eye sclera and lip coloration.py`
 
 **How it works:**
 1. Detect faces using Dlib's frontal face detector
