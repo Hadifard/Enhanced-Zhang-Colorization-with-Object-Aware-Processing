@@ -1,4 +1,4 @@
-# Zhang Colorization Enhanced
+# Improvement B&W image/video colorization by object-aware processing
 
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.5+-green.svg)](https://opencv.org/)
