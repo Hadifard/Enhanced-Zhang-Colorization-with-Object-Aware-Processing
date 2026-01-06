@@ -313,8 +313,8 @@ These comparison images highlight **specific problems solved** by our enhancemen
 **What this demonstrates:**
 
 **Left Panel (Zhang Original):** Automatic colorization - tie appears dark blue/black  
-**Middle Panel (Custom - Blue Tie):** User manually changed tie to bright blue  
-**Right Panel (Custom - Red Tie):** User manually changed tie to red
+**Middle Panel (Custom - Red Tie):** User manually changed tie to red  
+**Right Panel (Custom - Blue Tie):** User manually changed tie to blue
 
 **Interactive Feature:** Users can:
 1. View detected objects with IDs
@@ -326,7 +326,7 @@ These comparison images highlight **specific problems solved** by our enhancemen
 
 ---
 
-## 🔬 Technical Architecture
+## Technical Architecture
 
 ### System Overview
 
@@ -335,7 +335,7 @@ Input: Grayscale Image (L channel)
          ↓
 ┌────────────────────────────────────────┐
 │   SEGMENTATION MODULE                  │
-│   (DeepLabV3+ / YOLOv8)               │
+│   (DeepLabV3+ / YOLOv8)                │
 │   → Detects Objects & Boundaries       │
 └────────────────┬───────────────────────┘
                  ↓
@@ -423,7 +423,7 @@ We use **Lab color space** instead of RGB because:
 
 **Color Application (Lab Space):**
 - **Sclera:** a=0 (neutral), b=7 (slight warm yellow)
-- **Lips:** a=45 (strong red), b=25 (warm undertone)
+- **Lips:** a=45 (strong red), b=25 (warm undertone), Note:: a=25 and b=15 is a default and natural values
 
 ---
 
@@ -480,7 +480,7 @@ Fill gaps:
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Prerequisites
 
@@ -554,7 +554,7 @@ You need to download **3 files** (~132 MB total) and place them in the `models/`
 #### Option 1: Automatic Download (Recommended)
 
 ```bash
-python download_models.py
+automatically_download_Zhang_models.py
 ```
 
 This script will:
@@ -605,7 +605,7 @@ Or download manually from: http://dlib.net/files/shape_predictor_68_face_landmar
 ### Step 5: Verify Installation
 
 ```bash
-python verify_models.py
+automatically_download_Zhang_models.py
 ```
 
 Expected output:
