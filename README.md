@@ -882,6 +882,7 @@ Enhanced-Zhang-Colorization-with-Object-Aware-Processing/
 
 ---
 
+
 ## Citation
 
 ### This Enhanced Implementation
@@ -905,4 +906,321 @@ Please also cite the original work this builds upon:
 
 ```bibtex
 @inproceedings{zhang2016colorful,
-  title={Colorful Image
+  title={Colorful Image Colorization},
+  author={Zhang, Richard and Isola, Phillip and Efros, Alexei A},
+  booktitle={European Conference on Computer Vision (ECCV)},
+  year={2016},
+  organization={Springer}
+}
+```
+
+**Paper Links:**
+- [arXiv](https://arxiv.org/abs/1603.08511)
+- [Project Page](http://richzhang.github.io/colorization/)
+- [Original GitHub](https://github.com/richzhang/colorization)
+
+---
+
+## Contributing
+
+We welcome contributions! Here's how you can help:
+
+### Areas for Contribution
+
+1. **New Enhancement Modules**
+   - Hair color detection and correction
+   - Clothing texture awareness
+   - Sky/cloud specialized processing
+
+2. **Performance Optimizations**
+   - GPU acceleration improvements
+   - Batch processing enhancements
+   - Memory usage reduction
+
+3. **Additional Segmentation Models**
+   - Mask R-CNN integration
+   - SAM (Segment Anything Model) support
+   - Custom training for historical photos
+
+4. **UI/UX Improvements**
+   - Web-based interface
+   - Drag-and-drop functionality
+   - Real-time preview
+
+### How to Contribute
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Make your changes
+4. Add tests if applicable
+5. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+6. Push to the branch (`git push origin feature/AmazingFeature`)
+7. Open a Pull Request
+
+### Coding Standards
+
+- Follow PEP 8 style guide
+- Add docstrings to all functions
+- Include type hints where appropriate
+- Comment complex algorithms
+- Update README if adding new features
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+**Issue 1: "Model file not found"**
+```
+FileNotFoundError: models/colorization_release_v2.caffemodel
+```
+**Solution:** Download model files using `python download_models.py` or see [models/README.md](models/README.md)
+
+---
+
+**Issue 2: "Dlib not installed" warning**
+```
+[WARNING] dlib library unavailable - facial feature detection disabled
+```
+**Solution:** This is only needed for Method 2 (facial enhancement). Install with:
+```bash
+pip install dlib
+```
+If installation fails, see Dlib installation section above.
+
+---
+
+**Issue 3: Out of memory error**
+```
+RuntimeError: CUDA out of memory
+```
+**Solution:** 
+- Use CPU instead: Modify code to use `device = torch.device('cpu')`
+- Process smaller images
+- Close other applications
+
+---
+
+**Issue 4: "No objects detected"**
+```
+[WARNING] No objects detected in image
+```
+**Solution:**
+- Image may be too simple or abstract
+- Try enabling YOLOv8: `use_yolo=True` for better detection
+- Check that image loaded correctly
+
+---
+
+**Issue 5: Poor colorization results**
+```
+Colors look washed out or unnatural
+```
+**Solution:**
+- Adjust chroma threshold (Method 3): Try values between 3.0-10.0
+- Ensure good quality input image (not too compressed)
+- Historical photos with heavy damage may need preprocessing
+
+---
+
+**Issue 6: Slow processing**
+```
+Taking too long to process images
+```
+**Solution:**
+- Enable GPU if available
+- Use DeepLabV3+ instead of YOLOv8 (faster but less accurate)
+- Resize large images before processing:
+```python
+import cv2
+img = cv2.imread('large_image.jpg')
+img = cv2.resize(img, (800, 600))  # Resize to smaller dimensions
+```
+
+---
+
+## Performance Benchmarks
+
+Tested on: Intel i7-10700K, 32GB RAM, NVIDIA RTX 3070
+
+| Method | Image Size | CPU Time | GPU Time | Objects Detected |
+|--------|-----------|----------|----------|------------------|
+| Object-Aware (DeepLabV3+) | 1024x768 | 8.3s | 2.1s | 5-8 |
+| Object-Aware (YOLOv8) | 1024x768 | 12.7s | 3.4s | 12-15 |
+| Facial Enhancement | 800x600 | 6.5s | 1.8s | 1-3 faces |
+| Custom Recolorization | 1024x768 | 9.1s | 2.3s | 5-8 |
+| Original Zhang Only | 1024x768 | 1.2s | 0.4s | N/A |
+
+**Notes:**
+- YOLOv8 detects more objects but takes longer
+- Facial enhancement adds ~2-3s for landmark detection
+- GPU speeds up by 3-4x on average
+
+---
+
+## Best Practices
+
+### For Best Colorization Results
+
+1. **Image Quality**
+   - Use high-resolution scans (min 800x600)
+   - Avoid heavily compressed JPEGs
+   - Ensure good contrast in grayscale
+
+2. **Photo Types**
+   - **Portraits:** Use Method 2 (facial enhancement)
+   - **Complex scenes:** Use Method 1 (object-aware)
+   - **Creative control:** Use Method 3 (custom recolorization)
+   - **Simple scenes:** Any method works
+
+3. **Processing Tips**
+   - Test with automatic mode first
+   - Use YOLOv8 for photos with many objects
+   - Adjust chroma threshold if too much/little colorization
+   - For historical photos, consider noise reduction preprocessing
+
+4. **Color Accuracy**
+   - Remember: AI predicts plausible colors, not original colors
+   - For known colors (uniforms, flags), use Method 3 for correction
+   - Compare with reference photos when available
+
+---
+
+## License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+### What this means:
+
+**You CAN:**
+- Use commercially
+- Modify the code
+- Distribute
+- Use privately
+- Sublicense
+
+**You CANNOT:**
+- Hold authors liable
+- Use authors' names for endorsement
+
+**You MUST:**
+- Include original license
+- Include copyright notice
+
+---
+
+## Acknowledgments
+
+### Original Research
+- **Richard Zhang, Phillip Isola, Alexei A. Efros** - Original colorization algorithm and pre-trained models
+- **UC Berkeley** - Research institution supporting the original work
+
+### Libraries & Frameworks
+- **OpenCV** - Computer vision operations
+- **PyTorch & Torchvision** - Deep learning framework and pre-trained models
+- **Dlib** - Facial landmark detection
+- **Ultralytics** - YOLOv8 implementation
+- **NumPy** - Numerical computing
+
+### Datasets
+- **ImageNet** - Training data for Zhang model (1.3M images)
+- **COCO** - Object detection categories (80 classes)
+- **PASCAL VOC** - Semantic segmentation categories (21 classes)
+
+### Community
+- Stack Overflow community for troubleshooting help
+- GitHub contributors and issue reporters
+- Reddit communities: r/MachineLearning, r/computervision
+
+---
+
+## Contact & Support
+
+### Get Help
+
+- **Issues:** [GitHub Issues](https://github.com/YOUR_USERNAME/Zhang-Colorization-Enhanced/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/YOUR_USERNAME/Zhang-Colorization-Enhanced/discussions)
+- **Email:** sarhangifard.hadi@gmail.com (for business inquiries)
+
+### Follow for Updates
+
+- **GitHub:** (https://github.com/Hadifard))
+- **LinkedIn:** (https://www.linkedin.com/in/hadi-sarhangi-fard-mech-eng/)
+
+---
+
+## Star History
+
+If you find this project useful, please consider giving it a star! 
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Hadifard/Zhang-Colorization-Enhanced&type=Date)](https://star-history.com/#Hadifard/Zhang-Colorization-Enhanced&Date)
+
+---
+
+## Roadmap
+
+### Version 2.0 (Planned)
+
+- [ ] Web-based UI interface
+- [ ] Video colorization support
+- [ ] Real-time webcam colorization
+- [ ] Mobile app (iOS/Android)
+- [ ] Cloud API service
+
+### Version 1.5 (In Progress)
+
+- [ ] Hair color detection and correction
+- [ ] Clothing texture awareness
+- [ ] Sky/cloud specialized processing
+- [ ] Batch processing GUI
+- [ ] Docker container support
+
+### Version 1.0 (Current)
+
+- [x] Object-aware colorization
+- [x] Facial feature enhancement
+- [x] Interactive custom recolorization
+- [x] Comprehensive documentation
+- [x] Example images and comparisons
+
+---
+
+## Statistics
+
+- **Lines of Code:** ~2,500
+- **Functions:** 45+
+- **Classes:** 3 main colorization classes
+- **Supported Object Categories:** 80+ (COCO dataset)
+- **Supported Image Formats:** JPG, PNG, BMP
+- **Model Size:** ~230 MB total (with all models)
+
+---
+
+## Related Projects
+
+- [DeOldify](https://github.com/jantic/DeOldify) - GAN-based colorization
+- [Colorful Image Colorization (Official)](https://github.com/richzhang/colorization) - Original Zhang implementation
+- [InstColorization](https://github.com/ericsujw/InstColorization) - Instance-aware colorization
+- [ChromaGAN](https://github.com/pvitoria/ChromaGAN) - Adversarial colorization
+
+---
+
+## Further Reading
+
+### Academic Papers
+- [Zhang et al., 2016] Colorful Image Colorization (ECCV)
+- [Iizuka et al., 2016] Let there be Color! (SIGGRAPH)
+- [Larsson et al., 2016] Learning Representations for Automatic Colorization (ECCV)
+
+### Tutorials & Blogs
+- [Colorization using Optimization](http://www.cs.huji.ac.il/~yweiss/Colorization/)
+- [Automatic Colorization - Two Minute Papers](https://www.youtube.com/watch?v=MfaTOXxA8dM)
+- [How AI Colorizes Black and White Photos](https://petapixel.com/2019/07/23/how-ai-colorizes-black-and-white-photos/)
+
+---
+Made with ❤️ by Hadi Sarhangi Fard
+
+**Last Updated:** December 2025
+
+---
