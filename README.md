@@ -5,7 +5,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-1.9+-red.svg)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> Advanced black and white image or video colorization using **Zhang et al.'s deep learning algorithm** with custom enhancements for object-aware processing, facial feature correction, and color bleeding prevention.
+> Enhancement black and white image or video colorization using **Zhang et al.'s deep learning algorithm** with object-aware processing for custom recolorization, facial feature correction, and color bleeding prevention.
 
 ---
 
