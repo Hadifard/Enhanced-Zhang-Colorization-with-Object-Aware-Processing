@@ -1,1 +1,40 @@
-
+Enhanced-Zhang-Colorization-with-Object-Aware-Processing/
+│
+├── README.md                                    # This comprehensive guide
+├── requirements.txt                             # Python dependencies
+├── automatically_download_Zhang_models.py       # Automatic model downloader
+├── verify_models.py                             # Verify model installation
+├── LICENSE                                      # MIT License
+│
+├── src/                                         # Source code
+│   ├── object_detection_colorization.py         # Method 1: Color bleeding prevention
+│   ├── facial_feature_enhancement.py            # Method 2: Eye & lip correction
+│   └── custom_recolorization.py                 # Method 3: Interactive recoloring
+│
+├── models/                                      # Model files (download required)
+│   ├── README.md                                # Detailed download instructions
+│   ├── colorization_deploy_v2.prototxt          # (Download: 4 KB)
+│   ├── colorization_release_v2.caffemodel       # (Download: 129 MB)
+│   ├── pts_in_hull.npy                          # (Download: 3 KB)
+│   └── shape_predictor_68_face_landmarks.dat    # (Download: 99 MB, optional)
+│
+├── examples/                                    # Example images and outputs
+│   ├── input/                                   # Sample grayscale images (add your own)
+│   └── output/                                  # Complete pipeline visualizations
+│       ├── Combined_object aware_a new zealander vintage lady portrait.jpg
+│       ├── Combined_object aware_a young woman vintage portrait.jpg
+│       ├── Combined_object aware_horse.jpg
+│       ├── Combined_object aware_my image in Prague.jpg
+│       ├── Combined_object aware_William Holden actor vintage photo.jpg
+│       └── sample_output_running.png
+│
+└── docs/                                       # Documentation & comparisons
+    ├── comparison_images/                      # Before/after comparisons
+    │   ├── Comparison_zhang with object aware__eye sclera and Natural lip coloration_a new zelander vintage lady portrait.jpg
+    │   ├── Comparison_zhang with object aware__eye sclera and Natural lip coloration_a young woman vintage portrait.jpg
+    │   ├── Comparison_zhang with object aware_prevent color bleeding_a vintage photo from a horse.jpg
+    │   ├── Comparison_zhang with object aware__Prevent color bleeding and uniform colorization_my image in Prague.jpg
+    │   ├── Comparison_zhang with object aware__Uniform Colorization and object detection_a vintage racing car.jpg
+    │   └── Comparison_zhang with object aware_Custom Object Recolorization_William Holden.jpg
+    │
+    └── technical_details.md                    # Deep technical documentation
