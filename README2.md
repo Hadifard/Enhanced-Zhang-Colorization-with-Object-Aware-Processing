@@ -754,7 +754,7 @@ python Custom recolorization of detected objects.py
 8. Color set to RGB(255, 0, 0)
 ```
 
-
+![ُSample output](examples/output/sample_output_running.png)
 
 
 
@@ -776,7 +776,7 @@ python Custom recolorization of detected objects.py
 **Python API:**
 
 ```python
-from custom_recolorization import AdaptiveRecolorizer
+from Custom recolorization of detected objects import AdaptiveRecolorizer
 
 # Initialize
 colorizer = AdaptiveRecolorizer(
