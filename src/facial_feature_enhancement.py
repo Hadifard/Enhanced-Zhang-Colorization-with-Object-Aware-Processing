@@ -95,7 +95,7 @@ class FacialFeatureColorizer:
             np.full([1, 313], 2.606, dtype="float32")
         ]
         
-        print("  ✓ Zhang network ready")
+        print("[INFO] Zhang network ready")
     
     def _initialize_segmentation_network(self):
         """Load DeepLabV3+ for semantic segmentation of image regions."""
@@ -121,7 +121,7 @@ class FacialFeatureColorizer:
             'pottedplant', 'sheep', 'sofa', 'train', 'tvmonitor'
         ]
         
-        print("  ✓ DeepLabV3+ initialized")
+        print("[INFO] DeepLabV3+ initialized")
     
     def _initialize_facial_detection(self, predictor_path):
         """Setup dlib for 68-point facial landmark detection."""
@@ -141,7 +141,7 @@ class FacialFeatureColorizer:
             print("[INFO] Loading dlib facial detector...")
             self.face_detector = dlib.get_frontal_face_detector()
             self.landmark_predictor = dlib.shape_predictor(str(predictor_file))
-            print("  ✓ Facial detection system active")
+            print("[INFO] Facial detection system active")
     
     def extract_facial_features(self, image):
         """
@@ -215,21 +215,21 @@ class FacialFeatureColorizer:
         """
         mask = np.zeros((height, width), dtype=np.uint8)
         
-        # Fill complete eye region
+        #Fill complete eye region
         cv2.fillPoly(mask, [eye_landmarks], 1)
         
-        # Calculate eye center point
+        #Calculate eye center point
         center_x = int(eye_landmarks[:, 0].mean())
         center_y = int(eye_landmarks[:, 1].mean())
         
-        # Estimate pupil dimensions
+        #Estimate pupil dimensions
         eye_width = eye_landmarks[:, 0].max() - eye_landmarks[:, 0].min()
         pupil_radius = int(eye_width * 0.15)
         
-        # Exclude pupil from sclera mask
+        #Exclude pupil from sclera mask
         cv2.circle(mask, (center_x, center_y), pupil_radius, 0, -1)
         
-        # Smooth edge transitions
+        #smooth edge transitions
         mask_float = cv2.GaussianBlur(mask.astype(np.float32), (5, 5), 2)
         mask_binary = (mask_float > 0.3).astype(np.uint8)
         
@@ -252,13 +252,13 @@ class FacialFeatureColorizer:
         
         lab_modified = lab_image.copy()
         
-        # Create smooth transition mask
+        # Create mask
         mask_smooth = cv2.GaussianBlur(
             sclera_mask.astype(np.float32), (7, 7), 3
         )
         mask_normalized = mask_smooth / max(mask_smooth.max(), 1)
         
-        # Apply sclera color values to a and b channels
+        #apply sclera color values to a and b channels
         # a channel: neutral (0)
         lab_modified[:, :, 1] = (
             (1 - mask_normalized) * lab_modified[:, :, 1] + 
@@ -290,13 +290,13 @@ class FacialFeatureColorizer:
         
         lab_modified = lab_image.copy()
         
-        # Create soft transition mask
+        # Createa transition mask
         mask_smooth = cv2.GaussianBlur(
             lip_mask.astype(np.float32), (9, 9), 4
         )
         mask_normalized = mask_smooth / max(mask_smooth.max(), 1)
         
-        # Apply lip color values
+        # apply lip color values
         # a channel: strong red (45)
         lab_modified[:, :, 1] = (
             (1 - mask_normalized) * lab_modified[:, :, 1] + 
@@ -331,7 +331,7 @@ class FacialFeatureColorizer:
         """Execute semantic segmentation using DeepLabV3+."""
         orig_height, orig_width = image.shape[:2]
         
-        # Resize for efficient processing
+  
         max_dimension = 512
         if max(orig_height, orig_width) > max_dimension:
             scale_factor = max_dimension / max(orig_height, orig_width)
@@ -388,7 +388,7 @@ class FacialFeatureColorizer:
         y_min, x_min = coordinates.min(axis=0)
         y_max, x_max = coordinates.max(axis=0)
         
-        # Add padding for context
+     
         pad_size = 30
         y_min_padded = max(0, y_min - pad_size)
         x_min_padded = max(0, x_min - pad_size)
@@ -398,7 +398,7 @@ class FacialFeatureColorizer:
         region = image[y_min_padded:y_max_padded, x_min_padded:x_max_padded].copy()
         region_mask_cropped = region_mask[y_min_padded:y_max_padded, x_min_padded:x_max_padded]
         
-        # Convert to Lab color space
+        #cconvert to Lab color space
         normalized = region.astype("float32") / 255.0
         lab_region = cv2.cvtColor(normalized, cv2.COLOR_BGR2LAB)
         
@@ -407,7 +407,7 @@ class FacialFeatureColorizer:
         L_channel = cv2.split(resized_lab)[0]
         L_channel -= 50
         
-        # Generate ab predictions
+        
         self.zhang_net.setInput(cv2.dnn.blobFromImage(L_channel))
         ab_predicted = self.zhang_net.forward()[0, :, :, :].transpose((1, 2, 0))
         
@@ -418,7 +418,7 @@ class FacialFeatureColorizer:
             interpolation=cv2.INTER_CUBIC
         )
         
-        # Create smooth mask transition
+ 
         mask_float = region_mask_cropped.astype(np.float32)
         mask_smooth = cv2.GaussianBlur(mask_float, (21, 21), 10)
         
@@ -433,7 +433,7 @@ class FacialFeatureColorizer:
         """Create annotated image showing detected objects and facial features."""
         annotated = image.copy()
         
-        # Generate consistent colors for each class
+
         np.random.seed(42)
         color_palette = {}
         for class_name in set(classes):
@@ -443,18 +443,18 @@ class FacialFeatureColorizer:
         for mask, class_label in zip(masks, classes):
             color = color_palette[class_label]
             
-            # Create colored overlay
+     
             colored_overlay = np.zeros_like(annotated)
             colored_overlay[mask > 0] = color
             annotated = cv2.addWeighted(annotated, 0.7, colored_overlay, 0.3, 0)
             
-            # Draw contours
+            #draw contoures
             contours, _ = cv2.findContours(
                 mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
             )
             cv2.drawContours(annotated, contours, -1, color, 3)
             
-            # Add class label
+            #Adding class label
             coords = np.column_stack(np.where(mask > 0))
             if len(coords) > 0:
                 label_y, label_x = coords.min(axis=0)
@@ -466,7 +466,7 @@ class FacialFeatureColorizer:
                     class_label, font, font_scale, thickness
                 )
                 
-                # Draw label background
+              
                 cv2.rectangle(
                     annotated, 
                     (label_x - 5, label_y - text_height - 15), 
@@ -474,20 +474,20 @@ class FacialFeatureColorizer:
                     color, -1
                 )
                 
-                # Draw label text
+            
                 cv2.putText(
                     annotated, class_label, (label_x, label_y - 10),
                     font, font_scale, (255, 255, 255), thickness
                 )
         
-        # Highlight eye regions with cyan
+        #Highlight eye regions with cyan
         for eye_mask in eye_masks:
             contours, _ = cv2.findContours(
                 eye_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
             )
             cv2.drawContours(annotated, contours, -1, (255, 255, 0), 6)
         
-        # Highlight lip region with red
+        #Highlight lip region with red
         if lip_mask is not None:
             contours, _ = cv2.findContours(
                 lip_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
@@ -530,27 +530,27 @@ class FacialFeatureColorizer:
         else:
             print("      No facial features detected (using standard colorization)\n")
         
-        # Stage 2: Object segmentation
+        #Stage 2: Object segmentation
         print("[2/5] Performing semantic segmentation...")
         object_masks, object_classes, bounding_boxes = self.perform_segmentation(image)
         unique_classes = ', '.join(set(object_classes))
         print(f"      Detected {len(object_masks)} objects: {unique_classes}\n")
         
-        # Stage 3: Generate annotated visualization
+        #Stage 3: Generate annotated visualization
         print("[3/5] Generating annotated visualization...")
         annotated_image = self.generate_annotated_visualization(
             image, object_masks, object_classes, sclera_masks, lip_mask
         )
         
-        # Stage 4: Colorization process
+        #Stage 4: Colorization process
         print("[4/5] Applying Zhang colorization...")
         
-        # Prepare Lab color space
+
         normalized = image.astype("float32") / 255.0
         lab_full = cv2.cvtColor(normalized, cv2.COLOR_BGR2LAB)
         L_channel_full = cv2.split(lab_full)[0]
         
-        # Colorize background
+        #ccolorize background
         print("      - Processing background layer...")
         resized_lab = cv2.resize(lab_full, (224, 224))
         L_background = cv2.split(resized_lab)[0]
@@ -564,7 +564,7 @@ class FacialFeatureColorizer:
         
         ab_composite = ab_background.copy()
         
-        # Colorize each detected object
+        #colorize each detected object
         for idx, (mask, class_name) in enumerate(zip(object_masks, object_classes)):
             print(f"      - Processing {class_name} ({idx + 1}/{len(object_masks)})...")
             
@@ -580,31 +580,31 @@ class FacialFeatureColorizer:
                         (1 - smooth_mask) * ab_composite[y1:y2, x1:x2, channel]
                     )
         
-        # Stage 5: Apply natural facial colors
+        #Stage 5: Apply natural facial colors
         print("\n[5/5] Enhancing facial features with natural colors...")
         
-        # Reconstruct complete Lab image
+
         colorized_lab = np.concatenate(
             (L_channel_full[:, :, np.newaxis], ab_composite), axis=2
         )
         
-        # Apply natural sclera coloration
+      
         if sclera_masks:
             print("      - Applying natural white to eye sclera...")
             for sclera_mask in sclera_masks:
                 colorized_lab = self.apply_sclera_coloration(colorized_lab, sclera_mask)
         
-        # Apply natural lip coloration
+
         if lip_mask is not None:
             print("      - Applying natural rose tone to lips...")
             colorized_lab = self.apply_lip_coloration(colorized_lab, lip_mask)
         
-        # Convert back to BGR color space
+       
         colorized_bgr = cv2.cvtColor(colorized_lab, cv2.COLOR_LAB2BGR)
         colorized_bgr = np.clip(colorized_bgr, 0, 1)
         colorized_bgr = (255 * colorized_bgr).astype("uint8")
         
-        print(f"\n✓ Colorization complete!\n{'=' * 70}\n")
+        print(f"\nColorization complete!\n{'=' * 70}\n")
         
         return image, annotated_image, colorized_bgr, object_masks, object_classes
 
@@ -615,10 +615,10 @@ def main():
     print("NATURAL FACIAL FEATURE COLORIZATION SYSTEM")
     print("=" * 70)
     print("\nKey Features:")
-    print("  ✓ Authentic white sclera rendering")
-    print("  ✓ Natural rose/pink lip tones")
-    print("  ✓ Automatic facial landmark detection")
-    print("  ✓ Full object-aware colorization capabilities")
+    print("  Authentic white sclera rendering")
+    print("  Natural rose/pink lip tones")
+    print("  Automatic facial landmark detection")
+    print("  Full object-aware colorization capabilities")
     print("=" * 70 + "\n")
     
     # Discover available images
@@ -647,10 +647,10 @@ def main():
         else available_images[int(user_selection) - 1]
     )
     
-    # Initialize colorization system
+ 
     colorizer = FacialFeatureColorizer()
     
-    # Execute colorization
+
     original, annotated, colorized, masks, classes = colorizer.process_complete_colorization(
         selected_image
     )
@@ -668,7 +668,7 @@ def main():
     print(f"  - 2_annotated_{selected_image.name}")
     print(f"  - 3_colorized_{selected_image.name}")
     
-    # Prepare display
+    #display
     max_display_height = 1000
     current_height = original.shape[0]
     
