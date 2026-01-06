@@ -11,7 +11,7 @@
 
 ## Table of Contents
 
-- [Overview](#-overview)
+- [Overview](#-Overview)
 - [The Problem with Original Zhang Algorithm](#-the-problem-with-original-zhang-algorithm)
 - [Our Solutions](#-our-solutions)
 - [Visual Results & Comparisons](#-visual-results--comparisons)
