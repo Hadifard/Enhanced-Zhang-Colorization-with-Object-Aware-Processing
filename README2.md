@@ -865,7 +865,8 @@ Enhanced-Zhang-Colorization-with-Object-Aware-Processing/
 │       ├── Combined_object aware_a young woman vintage portrait.jpg
 │       ├── Combined_object aware_horse.jpg
 │       ├── Combined_object aware_my image in Prague.jpg
-│       └── Combined_object aware_William Holden actor vintage photo.jpg
+│       ├── Combined_object aware_William Holden actor vintage photo.jpg
+│       └── sample_output_running.png
 │
 └── docs/                                       # Documentation & comparisons
     ├── comparison_images/                      # Before/after comparisons
@@ -881,7 +882,7 @@ Enhanced-Zhang-Colorization-with-Object-Aware-Processing/
 
 ---
 
-## 📚 Citation
+## Citation
 
 ### This Enhanced Implementation
 
