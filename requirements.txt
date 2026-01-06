@@ -1,1 +1,68 @@
+# Zhang Colorization Enhanced - Requirements
+# Python 3.7+ required
 
+# ============================================================================
+# Core Dependencies (Required)
+# ============================================================================
+
+# Computer Vision
+opencv-python>=4.5.0,<5.0.0
+opencv-contrib-python>=4.5.0,<5.0.0
+
+# Numerical Computing
+numpy>=1.19.0,<2.0.0
+
+# Deep Learning Framework
+torch>=1.9.0,<3.0.0
+torchvision>=0.10.0,<1.0.0
+
+# Image Processing
+Pillow>=8.0.0,<11.0.0
+
+# ============================================================================
+# Optional Dependencies
+# ============================================================================
+
+# Facial Landmark Detection (for facial_feature_enhancement.py)
+# Uncomment if you need facial feature enhancement
+# dlib>=19.22.0
+
+# YOLOv8 Segmentation (for better object detection)
+# Uncomment if you want superior segmentation quality
+# ultralytics>=8.0.0
+
+# ============================================================================
+# Utility Libraries
+# ============================================================================
+
+# Path handling (usually built-in, but ensure compatibility)
+pathlib2>=2.3.0; python_version < '3.4'
+
+# Type hints support
+typing-extensions>=4.0.0; python_version < '3.8'
+
+# ============================================================================
+# Installation Notes
+# ============================================================================
+#
+# Basic Installation (Minimum requirements):
+#   pip install -r requirements.txt
+#
+# Full Installation (With all optional features):
+#   pip install -r requirements.txt
+#   pip install dlib ultralytics
+#
+# For CUDA Support (GPU acceleration):
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+#   (Replace cu118 with your CUDA version: cu117, cu118, cu121, etc.)
+#
+# For Apple Silicon (M1/M2/M3):
+#   pip install torch torchvision
+#   (PyTorch has native Metal Performance Shaders support)
+#
+# Troubleshooting dlib installation:
+#   - Ubuntu/Debian: sudo apt-get install cmake libboost-all-dev
+#   - macOS: brew install cmake boost
+#   - Windows: Download pre-built wheel from https://github.com/sachadee/Dlib
+#
+# ============================================================================
