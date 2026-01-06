@@ -22,7 +22,12 @@
 - [Citation](#citation)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
-
+- [Contact & Support](#contact--support)
+- [Star History](#star-history)
+- [Roadmap](#roadmap)
+- [Statistics](#statistics)
+- [Related Projects](#related-projects)
+- [Further Reading](#further-reading)
 ---
 
 ## Overview
