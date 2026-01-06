@@ -85,7 +85,7 @@ This project provides **three specialized Python implementations** that systemat
 
 ### Solution 1: Object-Aware Colorization (Prevent Color Bleeding)
 
-**File:** `Object detection processing to prevent color bleeding.py`
+**File:** `object_detection_colorization.py`
 
 **How it works:**
 1. Use semantic segmentation (DeepLabV3+ or YOLOv8) to detect individual objects
@@ -106,7 +106,7 @@ This project provides **three specialized Python implementations** that systemat
 
 ### Solution 2: Facial Feature Enhancement (Natural Eye & Lip Colors)
 
-**File:** `Enhancement eye sclera and lip coloration.py`
+**File:** `facial_feature_enhancement.py`
 
 **How it works:**
 1. Detect faces using Dlib's frontal face detector
@@ -132,7 +132,7 @@ This project provides **three specialized Python implementations** that systemat
 
 ### Solution 3: Interactive Custom Recolorization
 
-**File:** `Custom recolorization of detected objects.py`
+**File:** `custom_recolorization.py`
 
 **How it works:**
 1. Perform object detection and colorization
@@ -207,9 +207,9 @@ Each of these images shows the **complete transformation process** from original
 
 ---
 
-#### 4. My photo in Prague
+#### 4. My photo
 
-![Prague Pipeline](examples/output/Combined_object%20aware_my%20image%20in%20Prague.jpg)
+![My photo in Prague Pipeline](examples/output/Combined_object%20aware_my%20image%20in%20Prague.jpg)
 
 **What this shows:** [Original B&W] → [Multi-Object Detection] → [Final Result]
 
@@ -652,7 +652,7 @@ Enable YOLOv8 segmentation? (y/n, default: n): n
 **Python API:**
 
 ```python
-from Object detection processing to prevent color bleeding import ObjectByObjectColorizer
+from object_detection_colorization import ObjectByObjectColorizer
 
 # Initialize
 colorizer = ObjectByObjectColorizer(
@@ -679,7 +679,7 @@ print(f"Classes: {debug_info['detected_classes']}")
 
 ```bash
 cd src
-python Enhancement eye sclera and lip coloration.py
+facial_feature_enhancement.py
 ```
 
 **Interactive prompts:**
@@ -705,7 +705,7 @@ Select image number (press Enter for first image): 1
 **Python API:**
 
 ```python
-from python Enhancement eye sclera and lip coloration import FacialFeatureColorizer
+from facial_feature_enhancement import FacialFeatureColorizer
 
 # Initialize
 colorizer = FacialFeatureColorizer(
@@ -729,7 +729,7 @@ cv2.imwrite("colorized_portrait.jpg", colorized)
 
 ```bash
 cd src
-python Custom recolorization of detected objects.py
+python custom_recolorization.py
 ```
 
 **Interactive workflow:**
@@ -776,7 +776,7 @@ python Custom recolorization of detected objects.py
 **Python API:**
 
 ```python
-from Custom recolorization of detected objects import AdaptiveRecolorizer
+from custom_recolorization import AdaptiveRecolorizer
 
 # Initialize
 colorizer = AdaptiveRecolorizer(
@@ -830,45 +830,45 @@ for img_path in input_dir.glob("*.jpg"):
     output_path = output_dir / f"colorized_{img_path.name}"
     cv2.imwrite(str(output_path), colorized)
     
-    print(f"✓ Saved to {output_path}")
+    print(f"[INFO] Saved to {output_path}")
 ```
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
-Zhang-Colorization-Enhanced/
+Enhanced-Zhang-Colorization-with-Object-Aware-Processing/
 │
-├── README.md                          # This comprehensive guide
-├── requirements.txt                   # Python dependencies
-├── download_models.py                 # Automatic model downloader
-├── verify_models.py                   # Verify model installation
-├── LICENSE                            # MIT License
+├── README.md                                    # This comprehensive guide
+├── requirements.txt                             # Python dependencies
+├── automatically_download_Zhang_models.py       # Automatic model downloader
+├── verify_models.py                             # Verify model installation
+├── LICENSE                                      # MIT License
 │
-├── src/                               # Source code
-│   ├── object_detection_colorization.py    # Method 1: Color bleeding prevention
-│   ├── facial_feature_enhancement.py       # Method 2: Eye & lip correction
-│   └── custom_recolorization.py            # Method 3: Interactive recoloring
+├── src/                                         # Source code
+│   ├── object_detection_colorization.py         # Method 1: Color bleeding prevention
+│   ├── facial_feature_enhancement.py            # Method 2: Eye & lip correction
+│   └── custom_recolorization.py                 # Method 3: Interactive recoloring
 │
-├── models/                            # Model files (download required)
-│   ├── README.md                      # Detailed download instructions
+├── models/                                      # Model files (download required)
+│   ├── README.md                                # Detailed download instructions
 │   ├── colorization_deploy_v2.prototxt          # (Download: 4 KB)
 │   ├── colorization_release_v2.caffemodel       # (Download: 129 MB)
 │   ├── pts_in_hull.npy                          # (Download: 3 KB)
 │   └── shape_predictor_68_face_landmarks.dat    # (Download: 99 MB, optional)
 │
-├── examples/                          # Example images and outputs
-│   ├── input/                         # Sample grayscale images (add your own)
-│   └── output/                        # Complete pipeline visualizations
+├── examples/                                    # Example images and outputs
+│   ├── input/                                   # Sample grayscale images (add your own)
+│   └── output/                                  # Complete pipeline visualizations
 │       ├── Combined_object aware_a new zealander vintage lady portrait.jpg
 │       ├── Combined_object aware_a young woman vintage portrait.jpg
 │       ├── Combined_object aware_horse.jpg
 │       ├── Combined_object aware_my image in Prague.jpg
 │       └── Combined_object aware_William Holden actor vintage photo.jpg
 │
-└── docs/                              # Documentation & comparisons
-    ├── comparison_images/             # Before/after comparisons
+└── docs/                                       # Documentation & comparisons
+    ├── comparison_images/                      # Before/after comparisons
     │   ├── Comparison_zhang with object aware__eye sclera and Natural lip coloration_a new zelander vintage lady portrait.jpg
     │   ├── Comparison_zhang with object aware__eye sclera and Natural lip coloration_a young woman vintage portrait.jpg
     │   ├── Comparison_zhang with object aware_prevent color bleeding_a vintage photo from a horse.jpg
@@ -876,7 +876,7 @@ Zhang-Colorization-Enhanced/
     │   ├── Comparison_zhang with object aware__Uniform Colorization and object detection_a vintage racing car.jpg
     │   └── Comparison_zhang with object aware_Custom Object Recolorization_William Holden.jpg
     │
-    └── technical_details.md           # Deep technical documentation
+    └── technical_details.md                    # Deep technical documentation
 ```
 
 ---
