@@ -5,7 +5,6 @@
 
 # In[ ]:
 
-
 """
 Author: Hadi Sarhangi Fard
 
@@ -13,7 +12,7 @@ Author: Hadi Sarhangi Fard
 for object-aware processing and interactive color modification
 
 Interactive Object Recolorization System
-Smart region detection with manual color override capabilities
+Smart region detection with manual recolorizing 
 
 Core Features:
     - Intelligent detection of colorizable regions (excludes glass, rubber, lights)
@@ -21,13 +20,13 @@ Core Features:
     - Manual color application restricted to valid regions only
     - Automatic colorization with Zhang model as baseline
 
-Technical Approach:
+Technical Approaches:
     1. Zhang model provides initial colorization
     2. System identifies strongly colored regions using threshold analysis
     3. Only detected regions are marked as recolorable
     4. User can view and modify colors within permitted boundaries
 
-Dependencies:
+Requirements:
     opencv-python>=4.5.0
     numpy>=1.19.0
     torch>=1.9.0
@@ -46,7 +45,7 @@ from typing import Dict, List, Tuple, Optional
 class AdaptiveRecolorizer:
     """
     Advanced colorization system with intelligent region detection
-    and selective color override functionality.
+    and selective recolorizing objects in image..
     """
     
     def __init__(self, zhang_model_dir="models", use_yolo=False, 
@@ -96,7 +95,7 @@ class AdaptiveRecolorizer:
             np.full([1, 313], 2.606, dtype="float32")
         ]
         
-        print("  ✓ Zhang network ready")
+        print("[INFO] Zhang network ready")
     
     def _initialize_segmentation_network(self):
         """Setup semantic segmentation model (YOLOv8 or DeepLabV3+)."""
@@ -106,7 +105,7 @@ class AdaptiveRecolorizer:
             try:
                 from ultralytics import YOLO
                 self.seg_model = YOLO('yolov8x-seg.pt')
-                print("  ✓ YOLOv8-X segmentation loaded")
+                print("[INFO] YOLOv8-X segmentation loaded")
                 return
             except ImportError:
                 print("[WARNING] YOLOv8 unavailable, defaulting to DeepLabV3+")
@@ -124,7 +123,7 @@ class AdaptiveRecolorizer:
             )
         ])
         
-        print("  ✓ DeepLabV3+ segmentation loaded")
+        print("[INFO] DeepLabV3+ segmentation loaded")
     
     def _configure_color_presets(self):
         """Define preset colors for common object categories."""
@@ -397,17 +396,17 @@ class AdaptiveRecolorizer:
         
         overlay = visualization.copy()
         
-        # Color each detected object region
+        #Color each detected object region
         for idx in range(1, len(class_names) + 1):
             region_mask = (region_map == idx)
             if region_mask.sum() > 0:
                 color = color_palette[(idx - 1) % len(color_palette)]
                 overlay[region_mask] = color
         
-        # Blend overlay with base visualization
+        #blend overlay with base visualization
         visualization = cv2.addWeighted(visualization, 0.4, overlay, 0.6, 0)
         
-        # Add text labels for each object
+        #  add text labels for each object
         for idx, class_label in enumerate(class_names):
             region_mask = (region_map == idx + 1)
             if region_mask.sum() > 0:
@@ -428,7 +427,7 @@ class AdaptiveRecolorizer:
                     (0, 0, 0), -1
                 )
                 
-                # Draw label text
+                #label text
                 cv2.putText(
                     visualization, label_text, (center_x, center_y), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2
@@ -467,7 +466,7 @@ class AdaptiveRecolorizer:
         unique_classes = ', '.join(set(object_classes))
         print(f"[INFO] Detected {len(object_masks)} objects: {unique_classes}")
         
-        # Prepare Lab color space
+        #Prepare Lab color space
         normalized = image.astype("float32") / 255.0
         lab_full = cv2.cvtColor(normalized, cv2.COLOR_BGR2LAB)
         L_channel_full = cv2.split(lab_full)[0]
@@ -482,8 +481,8 @@ class AdaptiveRecolorizer:
         for idx, (mask, class_name) in enumerate(zip(object_masks, object_classes)):
             progress_indicator = f"[{idx + 1}/{len(object_masks)}] {class_name}..."
             print(f"  {progress_indicator}", end='')
-            
-            # Check for custom color override
+        
+            #Check for custom color override
             if custom_color_map and idx in custom_color_map:
                 target_color = custom_color_map[idx]
                 result = self.colorize_object_manual(image, mask, target_color)
@@ -495,16 +494,16 @@ class AdaptiveRecolorizer:
             if result is not None:
                 ab_object, (y1, x1, y2, x2), object_mask = result
                 
-                # Accumulate colorization
+                # accumplate colorization
                 ab_composite[y1:y2, x1:x2] += ab_object
                 coverage_counter[y1:y2, x1:x2] += object_mask.astype(np.float32)
                 colorizable_region_map[y1:y2, x1:x2][object_mask > 0] = idx + 1
         
-        # Handle overlapping regions (average colors)
+        
         overlap_regions = coverage_counter > 1
         ab_composite[overlap_regions] /= coverage_counter[overlap_regions, np.newaxis]
         
-        # Fill uncovered background areas
+  
         uncovered_pixels = coverage_counter == 0
         if uncovered_pixels.sum() > 0:
             lab_resized = cv2.resize(lab_full, (224, 224))
@@ -526,7 +525,7 @@ class AdaptiveRecolorizer:
         colorized_bgr = np.clip(colorized_bgr, 0, 1)
         colorized_bgr = (255 * colorized_bgr).astype("uint8")
         
-        # Generate visualization if requested
+
         region_visualization = None
         if generate_visualization:
             region_visualization = self.generate_colorizable_visualization(
@@ -544,7 +543,7 @@ def run_interactive_session():
     print("Only regions colored by Zhang are modifiable")
     print("=" * 70)
     
-    # Discover available images
+   
     supported_extensions = ['.jpg', '.jpeg', '.png', '.bmp']
     available_images = []
     
@@ -570,13 +569,13 @@ def run_interactive_session():
         else available_images[int(user_choice) - 1]
     )
     
-    # Configuration options
+    #configuration options
     yolo_preference = input("Enable YOLOv8 segmentation? (y/n, default=n): ").lower() == 'y'
     
     threshold_input = input("Chroma threshold (3-10, default=5): ").strip()
     chroma_threshold = float(threshold_input) if threshold_input else 5.0
     
-    # Initialize colorizer
+  
     colorizer = AdaptiveRecolorizer(
         use_yolo=yolo_preference, 
         chroma_threshold=chroma_threshold
@@ -586,7 +585,7 @@ def run_interactive_session():
     print("PHASE 1: AUTOMATIC COLORIZATION")
     print("=" * 70)
     
-    # Execute initial automatic colorization
+   n
     result = colorizer.process_interactive_colorization(
         selected_image, 
         generate_visualization=True
@@ -603,16 +602,57 @@ def run_interactive_session():
     original_image = cv2.imread(str(selected_image))
     grayscale_version = cv2.cvtColor(original_image, cv2.COLOR_BGR2GRAY)
     grayscale_version = cv2.cvtColor(grayscale_version, cv2.COLOR_GRAY2BGR)
+
+
+    def add_title_banner(img, title):
+        """Add title banner to image top."""
+        img_with_title = img.copy()
+        cv2.rectangle(img_with_title, (0, 0), (img.shape[1], 35), (50, 50, 50), -1)
+        cv2.putText(
+            img_with_title, title, (10, 23),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1
+        )
+        return img_with_title
+    
+    grayscale_version_title = add_title_banner(grayscale_version, "Original")
+    region_visualization_title = add_title_banner(region_visualization, "Detection")
+    auto_colorized_title = add_title_banner(auto_colorized, "Normal Colorization")
+
+
     
     comparison_panel = np.hstack([
-        grayscale_version, 
-        region_visualization, 
-        auto_colorized
+        grayscale_version_title, 
+        region_visualization_title, 
+        auto_colorized_title
     ])
     
     cv2.imshow("Original | Colorizable Regions | Automatic Result", comparison_panel)
     cv2.waitKey(1)
     
+    """
+    **** HOW TO ADD A BANNER ON AN IMAGE ****
+    SAMPLE:
+    1- Define a function to add title on image
+    
+    def add_title_banner(img, title):
+        
+        img_with_title = img.copy()
+        cv2.rectangle(img_with_title, (0, 0), (img.shape[1], 35), (50, 50, 50), -1)
+        cv2.putText(
+            img_with_title, title, (10, 23),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2
+        )
+        return img_with_title
+        
+    original_resized = add_title_banner(original_resized, "Original")
+    annotated_resized = add_title_banner(annotated_resized, "Detection (Eyes=Cyan, Lips=Red)")
+    colorized_resized = add_title_banner(colorized_resized, "Natural Colorization")
+    
+    comparison_panel = np.hstack([original_resized, annotated_resized, colorized_resized])
+    
+    cv2.imshow("Colorization Results - Press any key to exit", comparison_panel)
+  
+    """
     print("\n" + "=" * 70)
     print("PHASE 2: OBJECT ANALYSIS")
     print("=" * 70)
@@ -631,7 +671,7 @@ def run_interactive_session():
         print(f"  {idx}. {class_name:15s} - {percentage:5.1f}% colorizable "
               f"({colorizable_count:,} pixels)")
     
-    # Offer customization option
+
     customize_prompt = input("\n Modify object colors? (y/n): ").lower()
     
     if customize_prompt == 'y':
@@ -662,28 +702,45 @@ def run_interactive_session():
             except ValueError:
                 print("Invalid input - please enter numeric values")
         
-        # Apply custom colors if any were specified
+        #custom colors if any were specified
         if custom_colors:
             print("\n[INFO] Applying custom colors...")
             custom_result = colorizer.process_interactive_colorization(
                 selected_image, 
                 custom_color_map=custom_colors
             )[0]
+
+            custom_result_title = add_title_banner(custom_result, "Custom Colorized")
             
-            # Display comparison
-            custom_comparison = np.hstack([auto_colorized, custom_result])
+            #Display comparison
+            custom_comparison = np.hstack([auto_colorized_title, custom_result_title])
             cv2.imshow("Automatic vs Custom Colorization", custom_comparison)
             cv2.waitKey(1)
             
-            # Save custom result
+            #Save custom result
             output_directory = Path("colorized_output")
             output_directory.mkdir(exist_ok=True)
             
             custom_filename = output_directory / f"custom_{selected_image.name}"
+            combined_filename = output_directory / f"Combined_object aware_{selected_image.name}"
+            comparison_filename = output_directory / f"Comparison_zhang with object aware_Custom Object Recolorization_{selected_image.name}"
+            
             cv2.imwrite(str(custom_filename), custom_result)
+            #cv2.imwrite(str(combined_filename), comparison_panel)
+            #cv2.imwrite(str(comparison_filename), custom_comparison)
+
+
+            ok1 = cv2.imwrite(str(combined_filename), comparison_panel)
+            ok2 = cv2.imwrite(str(comparison_filename), custom_comparison)
+
+
+            print("Combined saved:", ok1)
+            print("Comparison saved:", ok2)
+
+            
             print(f" Saved custom colorization: {custom_filename}")
     
-    # Save automatic results
+    #Save automatic results
     output_directory = Path("colorized_output")
     output_directory.mkdir(exist_ok=True)
     
@@ -703,4 +760,3 @@ def run_interactive_session():
 
 if __name__ == "__main__":
     run_interactive_session()
-
