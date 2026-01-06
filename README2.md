@@ -620,7 +620,7 @@ Expected output:
 
 ---
 
-## 🚀 Usage Guide
+## Usage Guide
 
 ### Method 1: Object-Aware Colorization (Prevent Color Bleeding)
 
@@ -628,7 +628,7 @@ Expected output:
 
 ```bash
 cd src
-python object_detection_colorization.py
+python Object detection processing to prevent color bleeding.py
 ```
 
 **Interactive prompts:**
@@ -652,7 +652,7 @@ Enable YOLOv8 segmentation? (y/n, default: n): n
 **Python API:**
 
 ```python
-from object_detection_colorization import ObjectByObjectColorizer
+from Object detection processing to prevent color bleeding import ObjectByObjectColorizer
 
 # Initialize
 colorizer = ObjectByObjectColorizer(
@@ -679,7 +679,7 @@ print(f"Classes: {debug_info['detected_classes']}")
 
 ```bash
 cd src
-python facial_feature_enhancement.py
+python Enhancement eye sclera and lip coloration.py
 ```
 
 **Interactive prompts:**
@@ -705,7 +705,7 @@ Select image number (press Enter for first image): 1
 **Python API:**
 
 ```python
-from facial_feature_enhancement import FacialFeatureColorizer
+from python Enhancement eye sclera and lip coloration import FacialFeatureColorizer
 
 # Initialize
 colorizer = FacialFeatureColorizer(
@@ -729,7 +729,7 @@ cv2.imwrite("colorized_portrait.jpg", colorized)
 
 ```bash
 cd src
-python custom_recolorization.py
+python Custom recolorization of detected objects.py
 ```
 
 **Interactive workflow:**
@@ -751,8 +751,12 @@ python custom_recolorization.py
    R: 255
    G: 0
    B: 0
-8. ✓ Color set to RGB(255, 0, 0)
+8. Color set to RGB(255, 0, 0)
 ```
+
+
+
+
 
 **What it does:**
 1. Performs object detection
